@@ -1,0 +1,38 @@
+{
+  "profile": "local-only-preview",
+  "diagrams": [
+    {
+      "id": "b1",
+      "purpose": "恒温水箱",
+      "source": "diagrams/b1.dot",
+      "renderer": "graphviz",
+      "outputs": [
+        "diagrams/b1.svg"
+      ],
+      "documents": [],
+      "publication": "local"
+    },
+    {
+      "id": "b2",
+      "purpose": "SafeHome 控制面板",
+      "source": "diagrams/b2.dot",
+      "renderer": "graphviz",
+      "outputs": [
+        "diagrams/b2.svg"
+      ],
+      "documents": [],
+      "publication": "local"
+    },
+    {
+      "id": "b3",
+      "purpose": "字符串提取",
+      "source": "diagrams/b3.dot",
+      "renderer": "graphviz",
+      "outputs": [
+        "diagrams/b3.svg"
+      ],
+      "documents": [],
+      "publication": "local"
+    }
+  ]
+}

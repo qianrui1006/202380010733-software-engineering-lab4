@@ -1,0 +1,35 @@
+digraph Tank {
+graph [bgcolor="white", pad=.14, notranslate=true, splines=true, outputorder=edgesfirst];
+node [fontname="Microsoft YaHei", fontsize=16, fontcolor="#18364B", color="#244B64", style=rounded, shape=box, fixedsize=true, penwidth=1.5];
+edge [color="#486579", penwidth=1.45, arrowsize=.80, arrowhead=vee];
+start [pos="132,408!", width=0.16666666666666666, height=0.16666666666666666, label="", shape=circle, fillcolor="#18364B", color="#18364B", style=filled];
+schedule [pos="132,359!", width=0.3333333333333333, height=0.3333333333333333, label="", shape=diamond, color="#244B64", style=solid];
+sleep [pos="535,359!", width=1.9722222222222223, height=0.7361111111111112, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="140"><TR><TD WIDTH="140" HEIGHT="22"><B>休眠</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">entry / 断开继电器</FONT></TD></TR></TABLE>>];
+repair [pos="535,69!", width=1.9722222222222223, height=0.7361111111111112, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="140"><TR><TD WIDTH="140" HEIGHT="22"><B>维修</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">entry / 断开继电器</FONT></TD></TR></TABLE>>];
+subgraph cluster_active { graph [bb="39,139,628,300", label="恒温运行", lp="333,285", labelloc=t, fontname="Microsoft YaHei", fontsize=14, fontcolor="#416578", color="#244B64", penwidth=1.5, style=rounded, margin=20];
+active [pos="132,271!", width=0.16666666666666666, height=0.16666666666666666, label="", shape=circle, fillcolor="#18364B", color="#18364B", style=filled];
+idle [pos="132,187!", width=2.013888888888889, height=0.75, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="140"><TR><TD WIDTH="140" HEIGHT="22"><B>待机</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">entry / 断开继电器</FONT></TD></TR></TABLE>>];
+heat [pos="535,187!", width=2.013888888888889, height=0.75, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="140"><TR><TD WIDTH="140" HEIGHT="22"><B>加热</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">entry / 接通继电器</FONT></TD></TR></TABLE>>];
+}
+start -> schedule [pos="e,132,371 132,402 132,394.3333333333333 132,386.6666666666667 132,379"];
+schedule -> active [pos="e,132,300 132,347 132,334 132,321 132,308"];
+text_day [pos="225,321!", width=0, height=0, label="[07:00 ≤ 时刻 ＜ 23:00]", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+schedule -> sleep [pos="e,464,359 144,359 248,359 352,359 456,359"];
+text_night [pos="302,373!", width=0, height=0, label="[else]", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+active -> idle [pos="e,132,214 132,265 132,250.66666666666666 132,236.33333333333334 132,222"];
+idle -> heat [pos="e,462.5,199 204.5,199 287.8333333333333,199 371.1666666666667,199 454.5,199"];
+text_heat [pos="333,212!", width=0, height=0, label="采样 [T ＜ 20 °C 且有水]", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+heat -> idle [pos="e,204.5,175 462.5,175 379.1666666666667,175 295.8333333333333,175 212.5,175"];
+text_stop [pos="333,160!", width=0, height=0, label="采样 [T ≥ 100 °C 或缺水]", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+heat -> sleep [pos="e,565,332.5 565,300 565,308.1666666666667 565,316.3333333333333 565,324.5"];
+text_sleep [pos="613,317!", width=0, height=0, label="at(23:00)", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+sleep -> active [pos="e,505,300 505,332.5 505,324.3333333333333 505,316.1666666666667 505,308"];
+text_wake [pos="460,317!", width=0, height=0, label="at(07:00)", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+idle -> repair [pos="e,464,69 132,139 132,115.66666666666669 132,92.33333333333331 132,69 240,69 348,69 456,69"];
+text_fault [pos="303,83!", width=0, height=0, label="发生故障", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+sleep -> repair [pos="e,606,69 606,359 621.3333333333334,359 636.6666666666666,359 652,359 652,262.33333333333337 652,165.66666666666669 652,69 639.3333333333334,69 626.6666666666666,69 614,69"];
+text_sleepfault [pos="693,192!", width=0, height=0, label="发生故障", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+repair -> schedule [pos="e,120,359 535,42.5 535,34 535,25.5 535,17 364.3333333333333,17 193.66666666666666,17 23,17 23,131 23,245 23,359 52.666666666666664,359 82.33333333333333,359 112,359"];
+text_repair [pos="278,30!", width=0, height=0, label="维修完成", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+}
+

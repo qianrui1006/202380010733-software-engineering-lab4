@@ -1,0 +1,28 @@
+digraph Extract {
+graph [bgcolor="white", pad=.14, notranslate=true, splines=true, outputorder=edgesfirst];
+node [fontname="Microsoft YaHei", fontsize=16, fontcolor="#18364B", color="#244B64", style=rounded, shape=box, fixedsize=true, penwidth=1.5];
+edge [color="#486579", penwidth=1.45, arrowsize=.80, arrowhead=vee];
+start [pos="92,307!", width=0.16666666666666666, height=0.16666666666666666, label="", shape=circle, fillcolor="#18364B", color="#18364B", style=filled];
+outside [pos="92,229!", width=2.013888888888889, height=0.8055555555555556, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="141"><TR><TD WIDTH="141" HEIGHT="22"><B>引号外</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">普通字符 / 忽略</FONT></TD></TR></TABLE>>];
+inside [pos="402,229!", width=2.013888888888889, height=0.8055555555555556, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="141"><TR><TD WIDTH="141" HEIGHT="22"><B>引号内</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">普通字符 / 追加</FONT></TD></TR></TABLE>>];
+escaped [pos="698,229!", width=2.0972222222222223, height=0.8055555555555556, label="等待转义字符"];
+error [pos="552,102!", width=2.4444444444444446, height=0.7361111111111112, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="172"><TR><TD WIDTH="172" HEIGHT="22"><B>读取失败</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">entry / 报告错误位置</FONT></TD></TR></TABLE>>];
+done [pos="92,21!", width=0.2638888888888889, height=0.2638888888888889, label="", shape=doublecircle, fillcolor="#18364B", color="#18364B", style=filled];
+start -> outside [pos="e,92,258 92,301 92,289.3333333333333 92,277.6666666666667 92,266"];
+outside -> inside [pos="e,329.5,244 164.5,244 216.83333333333334,244 269.1666666666667,244 321.5,244"];
+text_open [pos="246,257!", width=0, height=0, label="双引号 / 记录起点", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+inside -> outside [pos="e,164.5,211 329.5,211 277.1666666666667,211 224.83333333333334,211 172.5,211"];
+text_close [pos="247,196!", width=0, height=0, label="双引号 / 输出并清空", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+inside -> escaped [pos="e,622.5,244 474.5,244 521.1666666666666,244 567.8333333333334,244 614.5,244"];
+text_slash [pos="548,257!", width=0, height=0, label="反斜杠", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+escaped -> inside [pos="e,474.5,211 622.5,211 575.8333333333334,211 529.1666666666666,211 482.5,211"];
+text_escaped [pos="550,196!", width=0, height=0, label="任意字符 / 原样追加", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+outside -> done [pos="e,92,34.5 92,200 92,147.5 92,95 92,42.5"];
+text_eof [pos="126,108!", width=0, height=0, label="EOF", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+inside -> error [pos="e,464,102 402,200 402,167.33333333333334 402,134.66666666666666 402,102 420,102 438,102 456,102"];
+text_unterminated [pos="326,149!", width=0, height=0, label="EOF / 标记引号未闭合", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+escaped -> error [pos="e,640,102 698,200 698,167.33333333333334 698,134.66666666666666 698,102 681.3333333333334,102 664.6666666666666,102 648,102"];
+text_dangling [pos="618,149!", width=0, height=0, label="EOF / 标记转义未完成", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+error -> done [pos="e,105.5,21 552,75.5 552,57.333333333333314 552,39.166666666666686 552,21 405.8333333333333,21 259.6666666666667,21 113.5,21"];
+}
+

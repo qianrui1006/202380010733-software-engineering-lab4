@@ -1,0 +1,2 @@
+message = "一般学习一门编程语言的时候，基本上第一个程序是输出\"Hello World!\""
+path = "C:\\tmp"

@@ -1,0 +1,28 @@
+digraph Panel {
+graph [bgcolor="white", pad=.14, notranslate=true, splines=true, outputorder=edgesfirst];
+node [fontname="Microsoft YaHei", fontsize=16, fontcolor="#18364B", color="#244B64", style=rounded, shape=box, fixedsize=true, penwidth=1.5];
+edge [color="#486579", penwidth=1.45, arrowsize=.80, arrowhead=vee];
+start [pos="313,444!", width=0.16666666666666666, height=0.16666666666666666, label="", shape=circle, fillcolor="#18364B", color="#18364B", style=filled];
+read [pos="313,378!", width=2.4722222222222223, height=0.6388888888888888, label="读取键入字符"];
+length [pos="313,291!", width=0.3333333333333333, height=0.3333333333333333, label="", shape=diamond, color="#244B64", style=solid];
+verify [pos="313,197!", width=0.3333333333333333, height=0.3333333333333333, label="", shape=diamond, color="#244B64", style=solid];
+select [pos="313,61!", width=2.4722222222222223, height=0.6388888888888888, label="系统功能选择"];
+locked [pos="602,197!", width=2.3333333333333335, height=0.9722222222222222, label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3" WIDTH="164"><TR><TD WIDTH="164" HEIGHT="22"><B>锁定面板</B></TD></TR><HR/><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="12">entry / 记录锁定时刻<BR ALIGN="LEFT"/>按键 / 丢弃字符</FONT></TD></TR></TABLE>>];
+start -> read [pos="e,313,401 313,438 313,428.3333333333333 313,418.6666666666667 313,409"];
+text_init [pos="420,420!", width=0, height=0, label="/ 清空输入与失败次数", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+read -> length [pos="e,313,303 313,355 313,340.3333333333333 313,325.66666666666663 313,311"];
+text_key [pos="380,331!", width=0, height=0, label="按键(c) / 追加 c", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+length -> read [pos="e,224,368 301,291 240.33333333333334,291 179.66666666666666,291 119,291 119,316.66666666666663 119,342.3333333333333 119,368 151.33333333333334,368 183.66666666666666,368 216,368"];
+text_short [pos="200,304!", width=0, height=0, label="[else]", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+length -> verify [pos="e,313,209 313,279 313,258.33333333333337 313,237.66666666666666 313,217"];
+text_full [pos="418,249!", width=0, height=0, label="[长度 = 4] / 取出并清空输入", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+verify -> read [pos="e,224,388 301,197 213,197 125,197 37,197 37,260.66666666666663 37,324.33333333333337 37,388 96.66666666666667,388 156.33333333333334,388 216,388"];
+text_retry [pos="162,211!", width=0, height=0, label="[else] / 失败数加 1", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+verify -> locked [pos="e,518,197 325,197 386.6666666666667,197 448.3333333333333,197 510,197"];
+text_lock [pos="420,216!", width=0, height=0, label="[错误且此前失败 = 2]\n/ 失败数加 1", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+verify -> select [pos="e,313,84 313,185 313,154 313,123 313,92"];
+text_success [pos="407,137!", width=0, height=0, label="[密码匹配] / 失败数归零", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+locked -> read [pos="e,402,378 602,232 602,280.66666666666663 602,329.33333333333337 602,378 538,378 474,378 410,378"];
+text_unlock [pos="510,327!", width=0, height=0, label="when(锁定时长 ＞ 120 s)\n/ 失败数归零", shape=plain, fixedsize=false, fontsize=13, fontcolor="#2A4657", style=solid];
+}
+
